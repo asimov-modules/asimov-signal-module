@@ -34,7 +34,7 @@ clientele = { version = "0.3.8", default-features = false, features = [
     "std",
 ], optional = true }
 rusqlite = { version = "0.37", default-features = true, features = [
-    "bundled",
+    "bundled-sqlcipher-vendored-openssl",
     "jiff",
     "serde_json",
 ] }
