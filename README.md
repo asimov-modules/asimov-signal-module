@@ -36,7 +36,13 @@ asimov-signal-reader
 
 ## ⚙ Configuration
 
-This module requires no configuration.
+### Encryption Key
+
+```bash
+export ASIMOV_SIGNAL_KEY=feedc0dedecafbadcafebabecafed00dfeedc0dedecafbadcafebabecafed00d
+```
+
+The key must be 64 hexadecimal characters, meaning 32 bytes (256 bits).
 
 ## 📚 Reference
 

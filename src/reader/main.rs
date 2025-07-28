@@ -6,6 +6,7 @@ compile_error!("asimov-signal-reader requires the 'std' feature");
 use asimov_module::{
     SysexitsError::{self, *},
     json::SkipNulls,
+    secrecy::ExposeSecret,
 };
 use clap::Parser;
 use clientele::StandardOptions;
@@ -55,7 +56,13 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
     #[cfg(feature = "tracing")]
     asimov_module::init_tracing_subscriber(&options.flags).expect("failed to initialize logging");
 
+    let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
+
     let conn = Connection::open(&options.path)?;
+
+    if let Some(key) = key {
+        conn.pragma_update(None, "key", format!("x'{}'", key.expose_secret()))?;
+    }
 
     let mut stmt = conn.prepare("SELECT id, type, json FROM conversations")?;
     let mut rows = stmt.query([])?;
