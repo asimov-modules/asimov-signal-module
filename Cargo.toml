@@ -33,6 +33,14 @@ clientele = { version = "0.3.8", default-features = false, features = [
     "clap",
     "std",
 ], optional = true }
+rusqlite = { version = "0.37", default-features = true, features = [
+    "jiff",
+    "serde_json",
+] }
+serde_json = { version = "1", default-features = false, features = [
+    "alloc",
+    "preserve_order",
+] }
 
 [profile.release]
 opt-level = "z"
@@ -43,3 +51,6 @@ lto = "thin"
 name = "asimov-signal-reader"
 path = "src/reader/main.rs"
 required-features = ["cli"]
+
+[patch.crates-io]
+asimov-module = { git = "https://github.com/asimov-platform/asimov.rs.git" }

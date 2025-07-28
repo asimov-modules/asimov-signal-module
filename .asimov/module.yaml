@@ -14,7 +14,7 @@ provides:
 
 handles:
   url_protocols:
+    - sgnl
   url_prefixes:
-  url_patterns:
-  file_extensions:
-  content_types:
+    - https://signal.me/#p/
+    - sgnl://signal.me/#p/
