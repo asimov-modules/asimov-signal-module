@@ -10,7 +10,7 @@ use asimov_module::{
 };
 use clap::Parser;
 use clientele::StandardOptions;
-use rusqlite::{Connection, Result};
+use rusqlite::{Connection, OpenFlags, Result};
 use serde_json::{Value, json};
 use std::{error::Error, io::Write, path::PathBuf};
 
@@ -58,10 +58,32 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
 
     let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
 
-    let conn = Connection::open(&options.path)?;
+    let Ok(conn) = Connection::open_with_flags(
+        &options.path,
+        OpenFlags::SQLITE_OPEN_READ_ONLY
+            | OpenFlags::SQLITE_OPEN_URI
+            | OpenFlags::SQLITE_OPEN_NO_MUTEX
+            | OpenFlags::SQLITE_OPEN_PRIVATE_CACHE,
+    ) else {
+        eprintln!(
+            "invalid Signal database file path: {}",
+            options.path.display()
+        );
+        return Ok(EX_CONFIG);
+    };
 
     if let Some(key) = key {
         conn.pragma_update(None, "key", format!("x'{}'", key.expose_secret()))?;
+    }
+
+    let key_is_correct = conn
+        .query_row("SELECT count(*) FROM sqlite_master", [], |_row| Ok(()))
+        .is_ok();
+    if !key_is_correct {
+        eprintln!(
+            "invalid Signal database encryption key (ensure ASIMOV_SIGNAL_KEY is correctly set)"
+        );
+        return Ok(EX_CONFIG);
     }
 
     let mut stmt = conn.prepare("SELECT id, type, json FROM conversations")?;
