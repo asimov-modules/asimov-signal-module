@@ -7,3 +7,11 @@ extern crate alloc;
 
 mod classes;
 pub use classes::*;
+
+mod dir;
+pub use dir::*;
+
+#[cfg(feature = "std")]
+mod path;
+#[cfg(feature = "std")]
+pub use path::*;

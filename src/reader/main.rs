@@ -8,6 +8,7 @@ use asimov_module::{
     json::SkipNulls,
     secrecy::ExposeSecret,
 };
+use asimov_signal_module::default_signal_path;
 use clap::Parser;
 use clientele::StandardOptions;
 use rusqlite::{Connection, OpenFlags, Result};
@@ -26,7 +27,7 @@ struct Options {
     output: Option<String>,
 
     /// Path to the (unencrypted!) Signal database file
-    #[clap(value_name = "SIGNAL-DB-FILE")]
+    #[clap(value_name = "SIGNAL-DB-FILE", default_value = default_signal_path().into_os_string())]
     path: PathBuf,
 }
 
