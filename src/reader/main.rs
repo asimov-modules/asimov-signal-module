@@ -8,7 +8,7 @@ use asimov_module::{
     json::SkipNulls,
     secrecy::ExposeSecret,
 };
-use asimov_signal_module::default_signal_path;
+use asimov_signal_module::{SignalDir, default_signal_path};
 use clap::Parser;
 use clientele::StandardOptions;
 use rusqlite::{Connection, OpenFlags, Result};
@@ -58,16 +58,24 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
     asimov_module::init_tracing_subscriber(&options.flags).expect("failed to initialize logging");
 
     let path = &options.path;
-    let db_path = if path.ends_with(".sqlite") {
-        path.clone()
+    let (path_dir, path_db) = if path.ends_with("sql/db.sqlite") {
+        (
+            path.parent()
+                .and_then(|p| p.parent())
+                .unwrap()
+                .to_path_buf(),
+            path.clone(),
+        )
     } else {
-        path.join("sql/db.sqlite")
+        (path.clone(), path.join("sql/db.sqlite"))
     };
+
+    let _dir = SignalDir::open(path_dir);
 
     let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
 
     let Ok(conn) = Connection::open_with_flags(
-        db_path,
+        path_db,
         OpenFlags::SQLITE_OPEN_READ_ONLY
             | OpenFlags::SQLITE_OPEN_URI
             | OpenFlags::SQLITE_OPEN_NO_MUTEX

@@ -1,7 +1,5 @@
 // This is free and unencumbered software released into the public domain.
 
-extern crate std;
-
 use asimov_module::getenv;
 use std::path::PathBuf;
 
