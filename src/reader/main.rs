@@ -17,7 +17,7 @@ use std::{error::Error, io::Write, path::PathBuf};
 
 /// asimov-signal-reader
 #[derive(Debug, Parser)]
-#[command(arg_required_else_help = true)]
+#[command(arg_required_else_help = false)]
 struct Options {
     #[clap(flatten)]
     flags: StandardOptions,
@@ -26,8 +26,8 @@ struct Options {
     #[arg(value_name = "FORMAT", short = 'o', long)]
     output: Option<String>,
 
-    /// Path to the (unencrypted!) Signal database file
-    #[clap(value_name = "SIGNAL-DB-FILE", default_value = default_signal_path().into_os_string())]
+    /// Path to the Signal data directory
+    #[clap(value_name = "SIGNAL-DIR", default_value = default_signal_path().into_os_string())]
     path: PathBuf,
 }
 
@@ -57,10 +57,17 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
     #[cfg(feature = "tracing")]
     asimov_module::init_tracing_subscriber(&options.flags).expect("failed to initialize logging");
 
+    let path = &options.path;
+    let db_path = if path.ends_with(".sqlite") {
+        path.clone()
+    } else {
+        path.join("sql/db.sqlite")
+    };
+
     let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
 
     let Ok(conn) = Connection::open_with_flags(
-        &options.path,
+        db_path,
         OpenFlags::SQLITE_OPEN_READ_ONLY
             | OpenFlags::SQLITE_OPEN_URI
             | OpenFlags::SQLITE_OPEN_NO_MUTEX

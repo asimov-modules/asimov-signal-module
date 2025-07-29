@@ -48,21 +48,25 @@ The key must be 64 hexadecimal characters, meaning 32 bytes (256 bits).
 
 ### Installed Binaries
 
-- `asimov-signal-reader`
+- `asimov-signal-reader`: reads chats from the Signal data directory
 
 ### `asimov-signal-reader`
 
 ```
 asimov-signal-reader
 
-Usage: asimov-signal-reader [OPTIONS]
+Usage: asimov-signal-reader [OPTIONS] [SIGNAL-DIR]
+
+Arguments:
+  [SIGNAL-DIR]  Path to the Signal data directory
 
 Options:
-  -d, --debug       Enable debugging output
-      --license     Show license information
-  -v, --verbose...  Enable verbose output (may be repeated for more verbosity)
-  -V, --version     Print version information
-  -h, --help        Print help
+  -d, --debug            Enable debugging output
+      --license          Show license information
+  -v, --verbose...       Enable verbose output (may be repeated for more verbosity)
+  -V, --version          Print version information
+  -o, --output <FORMAT>  Set the output format [default: jsonl] [possible values: jsonl]
+  -h, --help             Print help
 ```
 
 ## 👨‍💻 Development
