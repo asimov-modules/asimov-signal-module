@@ -2,8 +2,7 @@
 
 use alloc::format;
 use asimov_module::secrecy::{ExposeSecret, SecretString};
-use rusqlite::{Connection, OpenFlags, Result};
-use std::path::Path;
+use rusqlite::{Connection, Result};
 
 #[derive(Debug)]
 pub struct SignalDb {
@@ -11,7 +10,9 @@ pub struct SignalDb {
 }
 
 impl SignalDb {
-    pub fn open(path: impl AsRef<Path>) -> Result<Self> {
+    #[cfg(feature = "std")]
+    pub fn open(path: impl AsRef<std::path::Path>) -> Result<Self> {
+        use rusqlite::OpenFlags;
         let conn = Connection::open_with_flags(
             path,
             OpenFlags::SQLITE_OPEN_READ_ONLY

@@ -17,7 +17,9 @@ pub use config::*;
 mod db;
 pub use db::*;
 
+#[cfg(feature = "std")]
 mod dir;
+#[cfg(feature = "std")]
 pub use dir::*;
 
 #[cfg(feature = "std")]

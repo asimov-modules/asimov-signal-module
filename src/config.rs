@@ -3,7 +3,6 @@
 use alloc::string::String;
 use asimov_module::secrecy::SecretString;
 use serde_json::{Map, Value};
-use std::{borrow::ToOwned, io, path::PathBuf};
 
 #[derive(Debug)]
 pub struct SignalConfig {
@@ -11,12 +10,29 @@ pub struct SignalConfig {
 }
 
 impl SignalConfig {
-    pub fn open(path: PathBuf) -> io::Result<Self> {
+    #[cfg(feature = "std")]
+    pub fn open(path: impl AsRef<std::path::Path>) -> std::io::Result<Self> {
+        use std::io;
         let file = std::fs::File::open(path)?;
-        let json = serde_json::from_reader(file)
+        let config = serde_json::from_reader(file)
             .map_err(|err| io::Error::new(io::ErrorKind::Other, err))
-            .map(|config: Value| config.as_object().unwrap().to_owned())?;
-        Ok(Self { json })
+            .map(Self::from_value)?
+            .ok_or_else(|| {
+                io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "Signal config.json must contain an object",
+                )
+            })?;
+        Ok(config)
+    }
+
+    pub fn from_value(json: Value) -> Option<Self> {
+        match json.as_object() {
+            None => None,
+            Some(object) => Some(Self {
+                json: object.clone(),
+            }),
+        }
     }
 
     pub fn encrypted_key(&self) -> Option<SecretString> {
