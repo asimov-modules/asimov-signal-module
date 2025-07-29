@@ -6,12 +6,11 @@ compile_error!("asimov-signal-reader requires the 'std' feature");
 use asimov_module::{
     SysexitsError::{self, *},
     json::SkipNulls,
-    secrecy::ExposeSecret,
 };
-use asimov_signal_module::{SignalDir, default_signal_path};
+use asimov_signal_module::{SignalDb, SignalDir, default_signal_path};
 use clap::Parser;
 use clientele::StandardOptions;
-use rusqlite::{Connection, OpenFlags, Result};
+use rusqlite::Result;
 use serde_json::{Value, json};
 use std::{error::Error, io::Write, path::PathBuf};
 
@@ -70,39 +69,28 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
         (path.clone(), path.join("sql/db.sqlite"))
     };
 
+    let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
     let _dir = SignalDir::open(path_dir);
 
-    let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
-
-    let Ok(conn) = Connection::open_with_flags(
-        path_db,
-        OpenFlags::SQLITE_OPEN_READ_ONLY
-            | OpenFlags::SQLITE_OPEN_URI
-            | OpenFlags::SQLITE_OPEN_NO_MUTEX
-            | OpenFlags::SQLITE_OPEN_PRIVATE_CACHE,
-    ) else {
-        eprintln!(
-            "invalid Signal database file path: {}",
-            options.path.display()
-        );
+    let Ok(db) = SignalDb::open(&path_db) else {
+        eprintln!("invalid Signal database file path: {}", path_db.display());
         return Ok(EX_CONFIG);
     };
 
     if let Some(key) = key {
-        conn.pragma_update(None, "key", format!("x'{}'", key.expose_secret()))?;
+        db.decrypt(key)?;
     }
 
-    let key_is_correct = conn
-        .query_row("SELECT count(*) FROM sqlite_master", [], |_row| Ok(()))
-        .is_ok();
-    if !key_is_correct {
+    if !db.is_readable() {
         eprintln!(
             "invalid Signal database encryption key (ensure ASIMOV_SIGNAL_KEY is correctly set)"
         );
         return Ok(EX_CONFIG);
     }
 
-    let mut stmt = conn.prepare("SELECT id, type, json FROM conversations")?;
+    let mut stmt = db
+        .conn
+        .prepare("SELECT id, type, json FROM conversations")?;
     let mut rows = stmt.query([])?;
 
     let stdout = std::io::stdout();

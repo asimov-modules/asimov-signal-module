@@ -11,6 +11,12 @@ extern crate std;
 mod classes;
 pub use classes::*;
 
+mod config;
+pub use config::*;
+
+mod db;
+pub use db::*;
+
 mod dir;
 pub use dir::*;
 
