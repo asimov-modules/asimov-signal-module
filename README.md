@@ -36,13 +36,36 @@ asimov-signal-reader
 
 ## ⚙ Configuration
 
+Signal Desktop stores data in an encrypted [SQLCipher] database. The encryption
+key for this database is stored in a `config.json` file in Signal's application
+data directory, and that key is itself encrypted using an encryption password
+stored in the (platform-specific) system keychain.
+
+This module can be configured to decrypt the Signal database using either the
+encryption password or the encryption key. (You don't need both, just one.)
+
+### Encryption Password
+
+The simplest way to configure the module is to set the `ASIMOV_SIGNAL_PASSWORD`
+environment variable to the encryption password stored in the system keychain:
+
+```bash
+# macOS
+export ASIMOV_SIGNAL_PASSWORD=$(security find-generic-password -a "Signal Key" -s "Signal Safe Storage" -w)
+```
+
 ### Encryption Key
+
+Alternatively, for advanced users, you could set the `ASIMOV_SIGNAL_KEY`
+environment variable to the actual decrypted value of `encryptedKey` found in
+the `config.json` file:
 
 ```bash
 export ASIMOV_SIGNAL_KEY=feedc0dedecafbadcafebabecafed00dfeedc0dedecafbadcafebabecafed00d
 ```
 
-The key must be 64 hexadecimal characters, meaning 32 bytes (256 bits).
+This key must be 64 hexadecimal characters, meaning 32 bytes (256 bits).
+Deriving this key manually is well beyond the scope of these instructions.
 
 ## 📚 Reference
 
@@ -90,3 +113,5 @@ git clone https://github.com/asimov-modules/asimov-signal-module.git
 [RDF]: https://www.w3.org/TR/rdf12-primer/
 [Rust]: https://rust-lang.org
 [Signal]: https://signal.org
+[Signal Desktop]: https://github.com/signalapp/Signal-Desktop
+[SQLCipher]: https://www.zetetic.net/sqlcipher/

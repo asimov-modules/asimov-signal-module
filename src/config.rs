@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::string::String;
-use asimov_module::secrecy::SecretString;
+use super::SecretKey;
+use alloc::{boxed::Box, string::String};
 use serde_json::{Map, Value};
 
 #[derive(Debug)]
@@ -35,9 +35,21 @@ impl SignalConfig {
         }
     }
 
-    pub fn encrypted_key(&self) -> Option<SecretString> {
-        self.json
-            .get("encryptedKey")
-            .and_then(|x| x.as_str().map(SecretString::from))
+    pub fn key(&self) -> Option<SecretKey> {
+        let Some(key_str) = self.json.get("key").and_then(|x| x.as_str()) else {
+            return None;
+        };
+        hex::decode(key_str)
+            .ok()
+            .map(|key_data| SecretKey::new(Box::new(key_data)))
+    }
+
+    pub fn encrypted_key(&self) -> Option<SecretKey> {
+        let Some(key_str) = self.json.get("encryptedKey").and_then(|x| x.as_str()) else {
+            return None;
+        };
+        hex::decode(key_str)
+            .ok()
+            .map(|key_data| SecretKey::new(Box::new(key_data)))
     }
 }

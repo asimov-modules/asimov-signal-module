@@ -34,6 +34,9 @@ clientele = { version = "0.3.8", default-features = false, features = [
     "clap",
     "std",
 ], optional = true }
+hex = "0.4"
+libaes = "0.7"
+pbkdf2 = "0.12"
 rusqlite = { version = "0.37", default-features = true, features = [
     "bundled-sqlcipher-vendored-openssl",
     "jiff",
@@ -43,6 +46,7 @@ serde_json = { version = "1", default-features = false, features = [
     "alloc",
     "preserve_order",
 ] }
+sha1 = "0.10"
 
 [profile.release]
 opt-level = "z"

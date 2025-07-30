@@ -1,7 +1,8 @@
 // This is free and unencumbered software released into the public domain.
 
+use super::SecretKey;
 use alloc::format;
-use asimov_module::secrecy::{ExposeSecret, SecretString};
+use asimov_module::secrecy::ExposeSecret;
 use rusqlite::{Connection, Result};
 
 #[derive(Debug)]
@@ -23,9 +24,10 @@ impl SignalDb {
         Ok(Self { conn })
     }
 
-    pub fn decrypt(&self, key: SecretString) -> Result<()> {
+    pub fn decrypt(&self, key: SecretKey) -> Result<()> {
+        let ascii_key = hex::encode(key.expose_secret());
         self.conn
-            .pragma_update(None, "key", format!("x'{}'", key.expose_secret()))
+            .pragma_update(None, "key", format!("x'{}'", ascii_key))
     }
 
     pub fn is_readable(&self) -> bool {

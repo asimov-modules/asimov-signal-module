@@ -7,7 +7,9 @@ use asimov_module::{
     SysexitsError::{self, *},
     json::SkipNulls,
 };
-use asimov_signal_module::{SignalDb, SignalDir, default_signal_path};
+use asimov_signal_module::{
+    SignalDb, SignalDir, default_signal_path, signal_key_from_env, signal_password_from_env,
+};
 use clap::Parser;
 use clientele::StandardOptions;
 use rusqlite::Result;
@@ -69,8 +71,13 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
         (path.clone(), path.join("sql/db.sqlite"))
     };
 
-    let key = asimov_module::getenv::var_secret("ASIMOV_SIGNAL_KEY");
-    let _dir = SignalDir::open(path_dir);
+    let key = match signal_key_from_env().unwrap_or(None) {
+        Some(key) => Some(key),
+        None => {
+            let dir = SignalDir::open(path_dir)?;
+            dir.key(signal_password_from_env().unwrap_or(None))?
+        },
+    };
 
     let Ok(db) = SignalDb::open(&path_db) else {
         eprintln!("invalid Signal database file path: {}", path_db.display());
@@ -83,7 +90,7 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
 
     if !db.is_readable() {
         eprintln!(
-            "invalid Signal database encryption key (ensure ASIMOV_SIGNAL_KEY is correctly set)"
+            "failed to read Signal database (check ASIMOV_SIGNAL_PASSWORD or ASIMOV_SIGNAL_KEY)"
         );
         return Ok(EX_CONFIG);
     }
