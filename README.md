@@ -86,6 +86,16 @@ environment variable to the encryption password stored in the system keychain:
 export ASIMOV_SIGNAL_PASSWORD=$(security find-generic-password -a "Signal Key" -s "Signal Safe Storage" -w)
 ```
 
+```bash
+# GNOME
+export ASIMOV_SIGNAL_PASSWORD=$(secret-tool lookup application Signal)
+```
+
+```bash
+# KDE
+export ASIMOV_SIGNAL_PASSWORD=$(kwallet-query kdewallet -f "Chromium Keys" -r "Chromium Safe Storage")
+```
+
 ### Encryption Key
 
 Alternatively, for advanced users, you could set the `ASIMOV_SIGNAL_KEY`
