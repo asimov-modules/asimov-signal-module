@@ -22,7 +22,9 @@ pub use config::*;
 mod db;
 pub use db::*;
 
+#[cfg(feature = "std")]
 mod decrypt;
+#[cfg(feature = "std")]
 pub use decrypt::*;
 
 #[cfg(feature = "std")]

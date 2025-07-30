@@ -2,7 +2,7 @@
 
 [package]
 name = "asimov-signal-module"
-version = "0.0.0"
+version = "0.0.1"
 authors = ["ASIMOV Community"]
 edition = "2024"
 #rust-version = "1.85"
@@ -25,7 +25,7 @@ tracing = ["asimov-module/tracing", "clientele?/tracing"]
 unstable = []
 
 [dependencies]
-asimov-module = { version = "25.0.0-dev.18", default-features = true }
+asimov-module = { version = "25.0.0-dev.19", default-features = true }
 clap = { version = "4.5", default-features = false, features = [
     "std",
     "string",
@@ -57,6 +57,3 @@ lto = "thin"
 name = "asimov-signal-reader"
 path = "src/reader/main.rs"
 required-features = ["cli"]
-
-[patch.crates-io]
-asimov-module = { git = "https://github.com/asimov-platform/asimov.rs.git" }

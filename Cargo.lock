@@ -32,9 +32,9 @@ dependencies = [
 
 [[package]]
 name = "asimov-env"
-version = "25.0.0-dev.18"
+version = "25.0.0-dev.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec6284886d205710f49398ab4b03eb034462fdbf380dcc3e2c68512b9634025c"
+checksum = "bb88a5bc9e357292df10afde66a04d9260411652250dc94d208ce4e16a6e9199"
 dependencies = [
  "cap-directories",
  "cap-std",
@@ -44,8 +44,9 @@ dependencies = [
 
 [[package]]
 name = "asimov-module"
-version = "25.0.0-dev.18"
-source = "git+https://github.com/asimov-platform/asimov.rs.git#a2e353db8690e14bdb5506868b7c10c60b579fe3"
+version = "25.0.0-dev.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8c10d67d639bfdd530840d2e269319cee7d2b39ab4e4116961d531a71c9f0e7"
 dependencies = [
  "asimov-env",
  "clientele",
@@ -64,7 +65,7 @@ dependencies = [
 
 [[package]]
 name = "asimov-signal-module"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "asimov-module",
  "clap",
