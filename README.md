@@ -8,7 +8,11 @@
 
 ## ✨ Features
 
-- To be determined!
+- Accesses [Signal Desktop] chat/contact metadata and outputs it as [JSON-LD].
+- Reads the encrypted Signal Desktop database on macOS, Windows, Linux, etc.
+- Constructs a semantic knowledge graph based on the [KNOW] ontology.
+- Loads environment variables from `.env` (aka dotenv) files.
+- Distributed as a standalone static binary with zero runtime dependencies.
 
 ## 🛠️ Prerequisites
 
@@ -30,8 +34,36 @@ cargo install asimov-signal-module
 
 ## 👉 Examples
 
+### Metadata Export from Signal Desktop
+
+#### Listing all private and group chats
+
 ```bash
-asimov-signal-reader
+asimov-signal-reader | jq
+```
+
+#### Listing only private chats
+
+```bash
+asimov-signal-reader | fgrep SignalChat | jq
+```
+
+#### Listing only group chats
+
+```bash
+asimov-signal-reader | fgrep SignalGroupChat | jq
+```
+
+#### Examining a specific group chat
+
+```bash
+asimov-signal-reader | fgrep "My Group Chat" | jq
+```
+
+#### Collecting all phone numbers
+
+```bash
+asimov-signal-reader | jq '.peer.phone // empty'
 ```
 
 ## ⚙ Configuration
@@ -65,7 +97,7 @@ export ASIMOV_SIGNAL_KEY=feedc0dedecafbadcafebabecafed00dfeedc0dedecafbadcafebab
 ```
 
 This key must be 64 hexadecimal characters, meaning 32 bytes (256 bits).
-Deriving this key manually is well beyond the scope of these instructions.
+Deriving this key manually is well beyond the scope of these instructions here.
 
 ## 📚 Reference
 
