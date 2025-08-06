@@ -32,9 +32,9 @@ dependencies = [
 
 [[package]]
 name = "asimov-env"
-version = "25.0.0-dev.19"
+version = "25.0.0-dev.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb88a5bc9e357292df10afde66a04d9260411652250dc94d208ce4e16a6e9199"
+checksum = "e7416d3047e141847d53007cbf86e914254c9b217c94c3bc6ff20685def9b9ef"
 dependencies = [
  "cap-directories",
  "cap-std",
@@ -44,9 +44,9 @@ dependencies = [
 
 [[package]]
 name = "asimov-module"
-version = "25.0.0-dev.19"
+version = "25.0.0-dev.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8c10d67d639bfdd530840d2e269319cee7d2b39ab4e4116961d531a71c9f0e7"
+checksum = "86b66a5cca65a92cc9db2722ccb373abb6a4f42aed210d13a005296c7984f1f7"
 dependencies = [
  "asimov-env",
  "clientele",
@@ -55,7 +55,7 @@ dependencies = [
  "secrecy",
  "serde",
  "serde_json",
- "serde_yml",
+ "serde_yaml_ng",
  "slab",
  "thiserror 2.0.12",
  "tracing",
@@ -70,6 +70,7 @@ dependencies = [
  "asimov-module",
  "clap",
  "clientele",
+ "dogma",
  "hex",
  "libaes",
  "pbkdf2",
@@ -295,6 +296,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2ba51e88eeeb6858fc7528ed1727f135646230f30c49f2e922b4ffe9c952f9a5"
 dependencies = [
+ "clap",
  "iri-string",
  "known-schemes",
  "serde",
@@ -659,6 +661,7 @@ version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c000b5392f942e57f412e6dc49400601f435d283d9019a3da92432057d2f7499"
 dependencies = [
+ "clap",
  "iri-string",
  "serde",
 ]
@@ -701,16 +704,6 @@ dependencies = [
  "openssl-sys",
  "pkg-config",
  "vcpkg",
-]
-
-[[package]]
-name = "libyml"
-version = "0.0.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3302702afa434ffa30847a83305f0a69d6abd74293b6554c18ec85c7ef30c980"
-dependencies = [
- "anyhow",
- "version_check",
 ]
 
 [[package]]
@@ -964,18 +957,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "serde_yml"
-version = "0.0.12"
+name = "serde_yaml_ng"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "59e2dd588bf1597a252c3b920e0143eb99b0f76e4e082f4c92ce34fbc9e71ddd"
+checksum = "7b4db627b98b36d4203a7b458cf3573730f2bb591b28871d916dfa9efabfd41f"
 dependencies = [
  "indexmap",
  "itoa",
- "libyml",
- "memchr",
  "ryu",
  "serde",
- "version_check",
+ "unsafe-libyaml",
 ]
 
 [[package]]
@@ -1180,6 +1171,12 @@ name = "unicode-ident"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512"
+
+[[package]]
+name = "unsafe-libyaml"
+version = "0.2.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861"
 
 [[package]]
 name = "url"

@@ -19,8 +19,8 @@ publish = true
 [features]
 default = ["all", "cli", "std"]
 all = ["pretty", "tracing"]
-cli = ["asimov-module/cli", "std", "dep:clap", "dep:clientele"]
-std = ["asimov-module/std", "clap?/std", "clientele?/std"]
+cli = ["asimov-module/cli", "dogma/clap", "std", "dep:clap", "dep:clientele"]
+std = ["asimov-module/std", "clap?/std", "clientele?/std", "dogma/std"]
 unstable = []
 
 # Optional features:
@@ -29,6 +29,7 @@ tracing = ["asimov-module/tracing", "clientele?/tracing"]
 
 [dependencies]
 asimov-module = { version = "25.0.0-dev.21", default-features = true }
+dogma = { version = "0.1.11", default-features = false, features = ["all"] }
 hex = "0.4"
 libaes = "0.7"
 pbkdf2 = "0.12"
@@ -57,6 +58,16 @@ clientele = { version = "0.3.8", default-features = false, features = [
 opt-level = "z"
 strip = true
 lto = "thin"
+
+[[bin]]
+name = "asimov-signal-cataloger"
+path = "src/cataloger/main.rs"
+required-features = ["cli"]
+
+[[bin]]
+name = "asimov-signal-fetcher"
+path = "src/fetcher/main.rs"
+required-features = ["cli"]
 
 [[bin]]
 name = "asimov-signal-reader"
