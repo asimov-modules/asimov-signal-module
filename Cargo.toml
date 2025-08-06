@@ -18,22 +18,17 @@ publish = true
 
 [features]
 default = ["all", "cli", "std"]
-all = ["tracing"]
+all = ["pretty", "tracing"]
 cli = ["asimov-module/cli", "std", "dep:clap", "dep:clientele"]
 std = ["asimov-module/std", "clap?/std", "clientele?/std"]
-tracing = ["asimov-module/tracing", "clientele?/tracing"]
 unstable = []
 
+# Optional features:
+pretty = []
+tracing = ["asimov-module/tracing", "clientele?/tracing"]
+
 [dependencies]
-asimov-module = { version = "25.0.0-dev.19", default-features = true }
-clap = { version = "4.5", default-features = false, features = [
-    "std",
-    "string",
-], optional = true }
-clientele = { version = "0.3.8", default-features = false, features = [
-    "clap",
-    "std",
-], optional = true }
+asimov-module = { version = "25.0.0-dev.21", default-features = true }
 hex = "0.4"
 libaes = "0.7"
 pbkdf2 = "0.12"
@@ -47,6 +42,16 @@ serde_json = { version = "1", default-features = false, features = [
     "preserve_order",
 ] }
 sha1 = "0.10"
+
+# Optional integrations:
+clap = { version = "4.5", default-features = false, features = [
+    "std",
+    "string",
+], optional = true }
+clientele = { version = "0.3.8", default-features = false, features = [
+    "clap",
+    "std",
+], optional = true }
 
 [profile.release]
 opt-level = "z"
