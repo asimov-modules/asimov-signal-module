@@ -85,6 +85,6 @@ pub fn main() -> Result<SysexitsError, Box<dyn Error>> {
     {
         use std::process::{Command, exit};
         let status = Command::new(&program_path).args(program_args).status()?;
-        exit(status.code().unwrap_or(SysexitsError::EX_UNAVAILABLE));
+        exit(status.code().unwrap_or(SysexitsError::EX_UNAVAILABLE as _));
     }
 }
