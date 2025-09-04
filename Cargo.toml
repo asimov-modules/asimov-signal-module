@@ -2,7 +2,7 @@
 
 [package]
 name = "asimov-signal-module"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["ASIMOV Community"]
 edition = "2024"
 #rust-version = "1.85"
@@ -34,24 +34,24 @@ hex = "0.4"
 libaes = "0.7"
 pbkdf2 = "0.12"
 rusqlite = { version = "0.37", default-features = true, features = [
-    "bundled-sqlcipher-vendored-openssl",
-    "jiff",
-    "serde_json",
+  "bundled-sqlcipher-vendored-openssl",
+  "jiff",
+  "serde_json",
 ] }
 serde_json = { version = "1", default-features = false, features = [
-    "alloc",
-    "preserve_order",
+  "alloc",
+  "preserve_order",
 ] }
 sha1 = "0.10"
 
 # Optional integrations:
 clap = { version = "4.5", default-features = false, features = [
-    "std",
-    "string",
+  "std",
+  "string",
 ], optional = true }
 clientele = { version = "0.3.8", default-features = false, features = [
-    "clap",
-    "std",
+  "clap",
+  "std",
 ], optional = true }
 
 [profile.release]
