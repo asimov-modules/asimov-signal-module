@@ -29,7 +29,7 @@ tracing = ["asimov-module/tracing", "clientele?/tracing"]
 
 [dependencies]
 asimov-module = { version = "25.0.0-dev.21", default-features = true }
-dogma = { version = "0.1.11", default-features = false, features = ["all"] }
+dogma = { version = "0.2.1", default-features = false, features = ["all"] }
 hex = "0.4"
 libaes = "0.7"
 pbkdf2 = "0.12"
