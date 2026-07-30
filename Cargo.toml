@@ -33,7 +33,7 @@ dogma = { version = "0.1.11", default-features = false, features = ["all"] }
 hex = "0.4"
 libaes = "0.7"
 pbkdf2 = "0.12"
-rusqlite = { version = "0.37", default-features = true, features = [
+rusqlite = { version = "0.40", default-features = true, features = [
   "bundled-sqlcipher-vendored-openssl",
   "jiff",
   "serde_json",
