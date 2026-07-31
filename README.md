@@ -1,9 +1,7 @@
 # ASIMOV Signal Module
 
 [![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
-[![Compatibility](https://img.shields.io/badge/rust-2024%2B-blue)](https://endoflife.date/rust)
 [![Package on Crates.io](https://img.shields.io/crates/v/asimov-signal-module)](https://crates.io/crates/asimov-signal-module)
-[![Documentation](https://img.shields.io/docsrs/asimov-signal-module?label=docs.rs)](https://docs.rs/asimov-signal-module)
 
 **[ASIMOV] module for importing [Signal] chats.**
 
