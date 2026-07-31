@@ -1,10 +1,11 @@
 # ASIMOV Signal Module
 
 [![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
+[![Compatibility](https://img.shields.io/badge/rust-2024%2B-blue)](https://endoflife.date/rust)
 [![Package on Crates.io](https://img.shields.io/crates/v/asimov-signal-module)](https://crates.io/crates/asimov-signal-module)
-[![Documentation](https://docs.rs/asimov-signal-module/badge.svg)](https://docs.rs/asimov-signal-module)
+[![Documentation](https://img.shields.io/docsrs/asimov-signal-module?label=docs.rs)](https://docs.rs/asimov-signal-module)
 
-[ASIMOV] module for importing [Signal] chats.
+**[ASIMOV] module for importing [Signal] chats.**
 
 ## ✨ Features
 
@@ -26,7 +27,7 @@
 asimov module install signal -v
 ```
 
-<img width="100%" alt="Installation with the ASIMOV CLI" src="https://github.com/asimov-modules/asimov-signal-module/raw/master/etc/install.svg"/>
+<img width="100%" alt="Installation with the ASIMOV CLI" src="https://github.com/asimov-modules/asimov-signal-module/raw/master/etc/asciinema/install.svg"/>
 
 ### Installation from Source Code
 
@@ -113,19 +114,61 @@ Deriving this key manually is well beyond the scope of these instructions here.
 
 ## 📚 Reference
 
-### Installed Binaries
+### Command-Line Interface
 
 - `asimov-signal-reader`: reads chats from the Signal data directory
 
-### `asimov-signal-reader`
+#### `asimov-signal-cataloger`
 
+```shellsession
+$ asimov-signal-cataloger --help
+asimov-signal-cataloger
+
+Usage: asimov-signal-cataloger [OPTIONS] <URL>
+
+Arguments:
+  <URL>  The Signal URL to catalog (e.g., `sgnl://signal.me/#p/...`)
+
+Options:
+  -d, --debug            Enable debugging output
+      --license          Show license information
+  -v, --verbose...       Enable verbose output (may be repeated for more verbosity)
+  -V, --version          Print version information
+  -n, --limit <COUNT>    Limit the number of resources to catalog
+  -o, --output <FORMAT>  Set the output format [default: jsonl] [possible values: jsonl]
+  -h, --help             Print help
 ```
+
+#### `asimov-signal-fetcher`
+
+```shellsession
+$ asimov-signal-fetcher --help
+asimov-signal-fetcher
+
+Usage: asimov-signal-fetcher [OPTIONS] <URL>
+
+Arguments:
+  <URL>  The Signal URL to fetch (e.g., `sgnl://signal.me/#p/...`)
+
+Options:
+  -d, --debug            Enable debugging output
+      --license          Show license information
+  -v, --verbose...       Enable verbose output (may be repeated for more verbosity)
+  -V, --version          Print version information
+  -o, --output <FORMAT>  Set the output format [default: jsonl] [possible values: jsonl]
+  -h, --help             Print help
+```
+
+#### `asimov-signal-reader`
+
+```shellsession
+$ asimov-signal-reader --help
 asimov-signal-reader
 
 Usage: asimov-signal-reader [OPTIONS] [SIGNAL-DIR]
 
 Arguments:
-  [SIGNAL-DIR]  Path to the Signal data directory
+  [SIGNAL-DIR]  Path to the Signal data directory [default: "~/Library/Application Support/Signal"]
 
 Options:
   -d, --debug            Enable debugging output
@@ -144,11 +187,11 @@ git clone https://github.com/asimov-modules/asimov-signal-module.git
 
 ---
 
-[![Share on X](https://img.shields.io/badge/share%20on-x-03A9F4?logo=x)](https://x.com/intent/post?url=https://github.com/asimov-modules/asimov-signal-module&text=asimov-signal-module)
-[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/asimov-modules/asimov-signal-module&title=asimov-signal-module)
-[![Share on Hacker News](https://img.shields.io/badge/share%20on-hn-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/asimov-modules/asimov-signal-module&t=asimov-signal-module)
-[![Share on Facebook](https://img.shields.io/badge/share%20on-fb-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/asimov-modules/asimov-signal-module)
-[![Share on LinkedIn](https://img.shields.io/badge/share%20on-linkedin-3949AB?logo=linkedin)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/asimov-modules/asimov-signal-module)
+[![Share on X](https://img.shields.io/badge/share%20on-x-03A9F4?logo=x)](https://x.com/intent/post?url=https%3A%2F%2Fgithub.com%2Fasimov-modules%2Fasimov-signal-module&text=ASIMOV%20Signal%20Module)
+[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fasimov-modules%2Fasimov-signal-module&title=ASIMOV%20Signal%20Module)
+[![Share on Hacker News](https://img.shields.io/badge/share%20on-hn-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fasimov-modules%2Fasimov-signal-module&t=ASIMOV%20Signal%20Module)
+[![Share on Facebook](https://img.shields.io/badge/share%20on-fb-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fasimov-modules%2Fasimov-signal-module)
+[![Share on LinkedIn](https://img.shields.io/badge/share%20on-linkedin-3949AB?logo=linkedin)](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fasimov-modules%2Fasimov-signal-module)
 
 [ASIMOV]: https://asimov.sh
 [ASIMOV CLI]: https://cli.asimov.sh
