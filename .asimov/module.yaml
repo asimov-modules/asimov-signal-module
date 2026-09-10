@@ -10,7 +10,7 @@ links:
 
 provides:
   programs:
-    - asimov-signal-cataloger
+    - asimov-signal-lister
     - asimov-signal-fetcher
     - asimov-signal-reader
 

@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
 #[cfg(not(feature = "std"))]
-compile_error!("asimov-signal-cataloger requires the 'std' feature");
+compile_error!("asimov-signal-lister requires the 'std' feature");
 
 use asimov_module::SysexitsError::{self, *};
 use clap::Parser;
@@ -9,14 +9,14 @@ use clientele::StandardOptions;
 use dogma::{Uri, UriScheme, UriValueParser};
 use std::error::Error;
 
-/// asimov-signal-cataloger
+/// asimov-signal-lister
 #[derive(Debug, Parser)]
 #[command(arg_required_else_help = false)]
 struct Options {
     #[clap(flatten)]
     flags: StandardOptions,
 
-    /// Limit the number of resources to catalog.
+    /// Limit the number of resources to list.
     #[arg(value_name = "COUNT", short = 'n', long)]
     limit: Option<usize>,
 
@@ -24,7 +24,7 @@ struct Options {
     #[arg(value_name = "FORMAT", short = 'o', long)]
     output: Option<String>,
 
-    /// The Signal URL to catalog (e.g., `sgnl://signal.me/#p/...`)
+    /// The Signal URL to list (e.g., `sgnl://signal.me/#p/...`)
     #[arg(value_name = "URL", value_parser = UriValueParser::new(&[
         UriScheme::Other("sgnl".into()),
     ]))]

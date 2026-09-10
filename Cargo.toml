@@ -64,8 +64,8 @@ strip = true
 lto = "thin"
 
 [[bin]]
-name = "asimov-signal-cataloger"
-path = "src/cataloger/main.rs"
+name = "asimov-signal-lister"
+path = "src/lister/main.rs"
 required-features = ["cli"]
 
 [[bin]]
